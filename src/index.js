@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {render} from 'react-dom';
 import fetchData from './helpers/fetch.js';
 import getUrl from './helpers/url.js';
+import Form from './components/Form.js'
 
 let App = () => {
     const [mounted, setMounted] = useState({isMounted: false})
@@ -13,17 +14,18 @@ let App = () => {
         fetchData(getUrl)
         .then(data => {
             setMounted({...mounted, isMounted: true});
-            setStories({...stories, articles: data.results});
+            setStories({...stories, results: data.results});
         })
         .catch(() => {
             setMounted({isMounted: false});
         }) 
         return;
     }, []);
-    console.log(mounted);
-    console.log(stories);
-    return ( <>
+    // console.log(mounted);
     
+    return ( 
+        <>
+            <Form stories={stories} mount={mounted.isMounted} />
         </>
     );
 }
